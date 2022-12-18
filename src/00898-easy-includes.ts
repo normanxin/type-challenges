@@ -18,8 +18,12 @@
 
 
 /* _____________ Your Code Here _____________ */
+type Equals<U, V> = (<G>() => G extends U ? 1 : 2) extends
+  (<G>() => G extends V ? 1 : 2) ? true : false
 
-type Includes<T extends readonly unknown[], U> = {}
+type Includes<T extends readonly unknown[], U> = T extends [infer E, ...infer V]
+  ? Equals<E, U> extends true ? true : Includes<V, U>
+  : false
 
 
 /* _____________ Test Cases _____________ */
